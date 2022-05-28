@@ -11,11 +11,10 @@ class Human():
     def __init__(self):
         self.current_state = Infected()
 
-
 class Society:
     EMPTY = None
     def __init__(self, num_rows, num_cols, coef_people):
-        self.grid = np.array([[None]*num_rows for i in range(num_cols)])
+        self.grid = np.array([[None]*num_cols for i in range(num_rows)])
         self.num_of_residents = self.add_people(coef_people,\
             num_rows, num_cols)
         self.num_of_infected = 0
@@ -35,7 +34,10 @@ class Society:
             for j in range(cols):
                 if uniform(0,1) < coef:
                     counter +=1
-                    self.grid[i, j] = Human()
+                    h = Human()
+                    if uniform(0,1) < 0.3:
+                        h.set_state(Infected())
+                    self.grid[i, j] = h
                 else:
                     self.grid[i, j] = Society.EMPTY
         return counter 
@@ -54,7 +56,6 @@ class Society:
                             list2.append(i+row, j+col)
                 except AssertionError:
                     pass
-        
         return list1, list2
     
     def count_q(self, yesterday):
@@ -75,15 +76,16 @@ class Society:
         return False
 
     def time_flow(self):
+        """general function for time
+        countes q costant
+        """
         # for i in range(100):
-          
             # 1-second cycle
-
-            # counting new 
+            # counting new
 
             # confirmed = count_confirmed()
             # self.yesterday_confirmed = self.confirmed
-            # self.comfirmed = confimed()
+            # self.comfirmed = confirmed
             # q = self.count_q(self.yesterday_confirmed)
         pass
 
@@ -95,5 +97,5 @@ class Society:
             sstr+="\n" if i != self.num_rows() - 1 else ""
         return sstr
 
-soc = Society(10, 10, 0.7)
+soc = Society(20, 40, 0.7)
 print(soc)
