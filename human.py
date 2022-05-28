@@ -1,4 +1,8 @@
 """Human Class"""
+import sys
+
+sys.path.append("States")
+
 import math
 import random
 from random import choice
@@ -11,12 +15,10 @@ distribution = get_normal_distribution()
 
 class Human:
     def __init__(self, data):
-        self.current_state = Susceptible(self, data)
-        self.setState(self.current_state)
-        self.immunity_coeff = self.immunity_coefficient()
-        self.current_state.human = self
+        self.immunity_coeff = None
         self.age = self.get_normal_distribution_value() * 90
         self.gender = choice(['male', 'female'])
+        self.setState(Susceptible(self, data))
 
         self.data = data
 
@@ -30,7 +32,7 @@ class Human:
     def get_normal_distribution_value(self):
         return random.choice(distribution)
 
-    def immunity_coefticient(self):
+    def immunity_coefficient(self):
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())
