@@ -10,7 +10,7 @@ class Society:
     def __init__(self, num_rows, num_cols, residents):
         self.grid = Array2D(num_rows, num_cols)
         self.num_of_residents = residents
-        self.num_of_infeded = 0
+        self.num_of_infected = 0
         self.num_of_recovered = 0
         self.num_of_dead = 0
 
