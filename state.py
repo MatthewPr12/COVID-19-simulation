@@ -1,4 +1,5 @@
 from abc import ABC
+from random import random
 
 
 class State(ABC):
@@ -8,3 +9,11 @@ class State(ABC):
 
     def tick(self):
         self.time += 1
+
+
+class Confirmed(State):
+    def tick(self):
+        self.time += 1
+        if self.time == self.data['T2']:
+            if random() <= self.data['u']:
+                self.
