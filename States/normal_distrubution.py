@@ -9,4 +9,4 @@ N = 10000
 
 def get_normal_distribution():
     return list(scipy.stats.truncnorm.rvs(
-        (lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma, size=N))
+        (lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma, size=N)) * 90
