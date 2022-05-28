@@ -1,8 +1,10 @@
 import random
 import sys
-from time import sleep
 
+import matplotlib.pyplot as plt
 import numpy as np
+
+from visualization import display
 
 sys.path.insert(0, "States")
 
@@ -24,6 +26,8 @@ class Society:
 
         self.grid = np.array([[None] * num_cols for i in range(num_rows)])
         self.residents = self.add_people(coef_people, num_rows, num_cols)
+
+        self.fig, self.ax = plt.subplots()
 
         self.main()
 
@@ -81,7 +85,7 @@ class Society:
         return False
 
     def main(self):
-        for _ in range(100):
+        for day in range(100):
             data["q"] = self.count_q(self.yesterday_confirmed)
 
             for i in range(self.grid.shape[0]):
@@ -91,8 +95,7 @@ class Society:
 
             self.yesterday_confirmed = self.confirmed
 
-            print(self)
-            sleep(1)
+            display(self.grid, day, self.ax)
 
     def __str__(self):
         sstr = ''
@@ -117,4 +120,3 @@ data["u"] = 0.2
 data["k"] = 0.33
 
 soc = Society(20, 40, 0.7)
-
