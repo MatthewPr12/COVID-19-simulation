@@ -3,6 +3,14 @@ from numpy import random as np_random
 from random import choice
 import math
 
+import scipy.stats
+
+
+N = 10000
+
+
+scipy.stats.truncnorm.rvs((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma,)) * 90
+
 class Sosiety:
     pass
 class Human(Society):
@@ -24,7 +32,11 @@ class Human(Society):
         self.current_state.tick()
 
     def get_age():
-        np_random.normal(0,1) * 40
+        lower = 0
+        upper = 1
+        mu = 0.5
+        sigma = 0.2
+        scipy.stats.truncnorm.rvs((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma,)) * 90
 
 
     def immunity_coefticient(self):
