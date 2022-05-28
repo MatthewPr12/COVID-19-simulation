@@ -28,6 +28,9 @@ class Human:
         self.current_state = state
         self.current_state.human = self
 
+    def getState(self):
+        return self.current_state
+
     def tick(self):
         self.current_state.tick()
 

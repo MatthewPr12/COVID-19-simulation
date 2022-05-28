@@ -16,13 +16,14 @@ class Society:
 
     def __init__(self, num_rows, num_cols, coef_people):
         self.grid = np.array([[None] * num_cols for i in range(num_rows)])
-        self.num_of_residents = self.add_people(coef_people, \
-                                                num_rows, num_cols)
+        self.num_of_residents = self.add_people(coef_people, num_rows, num_cols)
         self.num_of_infected = 0
         self.num_of_recovered = 0
         self.num_of_dead = 0
         self.confirmed = 0
         self.yesterday_confirmed = 0
+
+        self.main()
 
     def num_rows(self):
         return len(self.grid)
