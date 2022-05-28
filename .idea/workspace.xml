@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd344985-a6a8-400f-92ba-469a5a3c4ecd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/States/normal_distrubution.py" beforeDir="false" afterPath="$PROJECT_DIR$/normal_distrubution.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/human.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/normal_distrubution.py" beforeDir="false" afterPath="$PROJECT_DIR$/normal_distrubution.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +42,28 @@
       <recent name="\\wsl$\Ubuntu\home\oleg\Projects\Sem2\Discretna\Project2\States" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.normal_distrubution (1)">
+  <component name="RunManager" selected="Python.human">
+    <configuration name="human" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Project2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="normal_distrubution (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,6 +129,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.human" />
         <item itemvalue="Python.normal_distrubution (1)" />
         <item itemvalue="Python.normal_distrubution" />
         <item itemvalue="Python.susceptible" />
