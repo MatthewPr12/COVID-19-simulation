@@ -1,5 +1,6 @@
 from arrays import Array2D
 from math import sqrt
+from random import uniform
 
 class Human():
     pass
@@ -7,12 +8,22 @@ class Human():
 class Society:
     HUMAN = Human()
     EMPTY = None
-    def __init__(self, num_rows, num_cols, residents):
+    def __init__(self, num_rows, num_cols, coef_people):
         self.grid = Array2D(num_rows, num_cols)
-        self.num_of_residents = residents
-        self.num_of_infected = 0
+        # self.num_of_residents = 
+        self.add_people(coef_people)
+        self.num_of_infeded = 0
         self.num_of_recovered = 0
         self.num_of_dead = 0
+    
+    def add_people(self, coef):
+        for i in range(self.grid.num_rows()):
+            for j in range(self.grid.num_cols()):
+                if uniform(0,1) < coef:
+                    self.grid[i, j] = Society.HUMAN
+                else:
+                    self.grid[i, j] = Society.EMPTY
+                    
 
     def get_neighbors(self, row, col):
         counter = 0
@@ -26,12 +37,29 @@ class Society:
                            counter += 1
                 except AssertionError:
                     pass
-     
         if self.is_human(row, col):
             counter -= 1
         return counter
 
     def is_human(self, row, col):
-        return True if isinstance(self.grid[row, col], Human()) else False
+        return True if self.grid[row, col]== self.HUMAN else False
+    
+    def __str__(self):
+        sstr=''
+        for i in range(self.grid.num_rows()):
+            for j in range(self.grid.num_cols()):
+                sstr+= "1" if self.is_human(i,j) else"0"
+            sstr+="\n" if i != self.grid.num_rows() - 1 else ""
+        return sstr
 
+soc = Society(10, 10, 0.5)
+print(soc)
 
+# 1100001000
+# 1010001001
+# 1110101111
+# 0001010000
+# 1001111111
+# 1100010000
+# 0101100001
+# 1101111011
