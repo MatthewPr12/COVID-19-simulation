@@ -2,7 +2,8 @@ from abc import ABC
 
 
 class State(ABC):
-    def __init__(self, data):
+    def __init__(self, human, data):
+        self.human = human
         self.data = data
         self.time = 0
 
