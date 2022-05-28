@@ -15,14 +15,14 @@ distribution = get_normal_distribution()
 
 class Human:
     def __init__(self, data, society, coords):
-        self.immunity_coeff = self.immunity_coefficient()
-        self.age = self.get_normal_distribution_value() * 90
-        self.gender = choice(['male', 'female'])
-        self.setState(Susceptible(self, data))
-
         self.data = data
         self.society = society
         self.coords = coords
+        self.gender = choice(['male', 'female'])
+
+        self.age = self.get_normal_distribution_value() * 90
+        self.immunity_coeff = self.immunity_coefficient()
+        self.setState(Susceptible(self, data))
 
     def setState(self, state):
         self.current_state = state
