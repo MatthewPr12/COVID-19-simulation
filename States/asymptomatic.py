@@ -1,5 +1,5 @@
-from state import State
 from recovered import Recovered
+from state import State
 
 
 class Asymptomatic(State):
