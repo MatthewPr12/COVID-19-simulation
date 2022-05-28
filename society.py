@@ -1,4 +1,5 @@
 from arrays import Array2D
+from math import sqrt
 
 class Human():
     pass
@@ -19,12 +20,18 @@ class Society:
             for j in range(-1, 2):
                 try:
                     if self.is_human(i + row, j + col):
-                        counter += 1
+                        if i == 0 or j == 0:
+                            counter += sqrt(2)
+                        else:
+                           counter += 1
                 except AssertionError:
                     pass
+     
         if self.is_human(row, col):
             counter -= 1
         return counter
 
     def is_human(self, row, col):
         return True if isinstance(self.grid[row, col], Human()) else False
+
+
