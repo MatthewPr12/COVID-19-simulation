@@ -16,7 +16,6 @@ class Susceptible(State):
 
     def tick(self):
         super().tick()
-
         if random.random() < self.data['q']:
             self.human.setState(SelfIsolated(self.human, self.data))
         elif random.random() < self.p * self.p_a:
@@ -28,6 +27,7 @@ class Susceptible(State):
         straight, diag = self.human.society.get_neighbors(self.human.coords)
 
         p = 0
+        # print(straight,diag)
         for nb in straight:
             p += nb.immunity_coefficient()
 

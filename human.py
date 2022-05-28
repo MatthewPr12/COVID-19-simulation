@@ -41,3 +41,6 @@ class Human:
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())
+    #
+    # def __repr__(self):
+    #     return self.current_state.__class__.__name__[0]
