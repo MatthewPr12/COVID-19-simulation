@@ -11,10 +11,11 @@ class Human():
     def __init__(self):
         self.current_state = Infected()
 
+
 class Society:
     EMPTY = None
     def __init__(self, num_rows, num_cols, coef_people):
-        self.grid = np.array([[0]*num_rows for i in range(num_cols)])
+        self.grid = np.array([[None]*num_rows for i in range(num_cols)])
         self.num_of_residents = self.add_people(coef_people,\
             num_rows, num_cols)
         self.num_of_infected = 0
@@ -86,13 +87,13 @@ class Society:
             # q = self.count_q(self.yesterday_confirmed)
         pass
 
-    # def __str__(self):
-    #     sstr=''
-    #     for i in range(self.num_rows()):
-    #         for j in range(self.num_cols()):
-    #             sstr+= "1" if (self.is_human(i,j)) else"0"
-    #         sstr+="\n" if i != self.num_rows() - 1 else ""
-    #     return sstr
+    def __str__(self):
+        sstr=''
+        for i in range(self.num_rows()):
+            for j in range(self.num_cols()):
+                sstr+= "1" if (self.is_human(i,j)) else"0"
+            sstr+="\n" if i != self.num_rows() - 1 else ""
+        return sstr
 
 soc = Society(10, 10, 0.7)
-print(soc.grid)
+print(soc)
