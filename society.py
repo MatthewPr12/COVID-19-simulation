@@ -1,13 +1,15 @@
-from arrays import Array2D
 from math import sqrt
 from random import uniform
 
-class Human():
-    pass
+from arrays import Array2D
+from human import Human
+
+data = dict()
+
 
 class Society:
-    HUMAN = Human()
     EMPTY = None
+
     def __init__(self, num_rows, num_cols, coef_people):
         self.grid = Array2D(num_rows, num_cols)
         self.num_of_residents = self.add_people(coef_people)
@@ -16,17 +18,17 @@ class Society:
         self.num_of_dead = 0
         self.confirmed = 0
         self.yesterday_confirmed = 0
-    
+
     def add_people(self, coef):
         counter = 0
         for i in range(self.grid.num_rows()):
             for j in range(self.grid.num_cols()):
-                if uniform(0,1) < coef:
-                    counter +=1
-                    self.grid[i, j] = Society.HUMAN
+                if uniform(0, 1) < coef:
+                    counter += 1
+                    self.grid[i, j] = Human(data)
                 else:
                     self.grid[i, j] = Society.EMPTY
-        return counter   
+        return counter
 
     def get_neighbors(self, row, col):
         counter = 0
@@ -37,45 +39,40 @@ class Society:
                         if i == 0 or j == 0:
                             counter += sqrt(2)
                         else:
-                           counter += 1
+                            counter += 1
                 except AssertionError:
                     pass
         if self.is_human(row, col):
             counter -= 1
         return counter
-    
-    def count_q(self, yesterday):
-        q = 0.7 - 0.1(self.confirmed - yesterday)/yesterday/0.025
+
+    def count_q(self, before):
+        q = 0.7 - 0.1 * (self.confirmed - before) / before / 0.025
         return q
 
-
     def is_human(self, row, col):
-        return True if self.grid[row, col]== self.HUMAN else False
-    
+        return isinstance(self.grid[row, col], Human)
+
     def time_flow(self):
         # for i in range(100):
-          
-            # 1-second cycle
 
-            # counting new 
+        # 1-second cycle
 
-            # confirmed = count_confirmed()
-            # self.yesterday_confirmed = self.confirmed
-            # self.comfirmed = confimed()
-            # q = self.count_q(self.yesterday_confirmed)
+        # counting new
+
+        # confirmed = count_confirmed()
+        # self.yesterday_confirmed = self.confirmed
+        # self.comfirmed = confimed()
+        # q = self.count_q(self.yesterday_confirmed)
         pass
 
-
     def __str__(self):
-        sstr=''
+        sstr = ''
         for i in range(self.grid.num_rows()):
             for j in range(self.grid.num_cols()):
-                sstr+= "1" if self.is_human(i,j) else"0"
-            sstr+="\n" if i != self.grid.num_rows() - 1 else ""
+                sstr += "1" if self.is_human(i, j) else "0"
+            sstr += "\n" if i != self.grid.num_rows() - 1 else ""
         return sstr
-
-    
-        
 
 
 soc = Society(10, 10, 0.5)

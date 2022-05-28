@@ -1,5 +1,6 @@
-from state import State
 from confirmed import Confirmed
+from state import State
+
 
 class Infected(State):
     def tick(self):
