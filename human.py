@@ -1,11 +1,13 @@
 """Human Class"""
 import math
+import random
 from random import choice
 
-from numpy import random as np_random
-
 from States.susceptible import Susceptible
+from normal_distrubution import get_normal_distribution
 from society import Society
+
+distribution = get_normal_distribution()
 
 
 class Human:
@@ -27,7 +29,7 @@ class Human:
         self.current_state.tick()
 
     def get_age(self):
-        np_random.normal(0, 1) * 40
+        return random.choice(distribution)
 
     def immunity_coefticient(self):
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) * \
