@@ -64,9 +64,7 @@ class Society:
 
     def is_normal_human(self, row, col):
         if isinstance(self.grid[row, col], Human) and \
-        (isinstance(self.grid[row, col].current_state, Infected) or \
-            isinstance(self.grid[row, col].current_state, Asymptomatic) or\
-                isinstance(self.grid[row, col].current_state, Confirmed)):
+        isinstance(self.grid[row, col].current_state, (Infected, Asymptomatic, Confirmed)):
                 return True
         return False
 
