@@ -1,57 +1,78 @@
-from arrays import Array2D
-from math import sqrt
 from random import uniform
+import numpy as np
 
-class Human():
+class Infected():
     pass
+class Confirmed():
+    pass
+class Asymptomatic():
+    pass
+class Human():
+    def __init__(self):
+        self.current_state = Infected()
 
 class Society:
-    HUMAN = Human()
     EMPTY = None
     def __init__(self, num_rows, num_cols, coef_people):
-        self.grid = Array2D(num_rows, num_cols)
-        self.num_of_residents = self.add_people(coef_people)
+        self.grid = np.array([[0]*num_rows for i in range(num_cols)])
+        self.num_of_residents = self.add_people(coef_people,\
+            num_rows, num_cols)
         self.num_of_infected = 0
         self.num_of_recovered = 0
         self.num_of_dead = 0
         self.confirmed = 0
         self.yesterday_confirmed = 0
     
-    def add_people(self, coef):
+    def num_rows(self):
+        return len(self.grid)
+    def num_cols(self):
+        return len(self.grid[0])
+
+    def add_people(self, coef, rows, cols):
         counter = 0
-        for i in range(self.grid.num_rows()):
-            for j in range(self.grid.num_cols()):
+        for i in range(rows):
+            for j in range(cols):
                 if uniform(0,1) < coef:
                     counter +=1
-                    self.grid[i, j] = Society.HUMAN
+                    self.grid[i, j] = Human()
                 else:
                     self.grid[i, j] = Society.EMPTY
-        return counter   
+        return counter 
 
     def get_neighbors(self, row, col):
-        counter = 0
+        list1, list2 = [],  []
         for i in range(-1, 2):
             for j in range(-1, 2):
                 try:
-                    if self.is_human(i + row, j + col):
+                    if i == j == 0:
+                        continue
+                    elif self.is_normal_human(i + row, j + col):
                         if i == 0 or j == 0:
-                            counter += sqrt(2)
+                            list1.append(i+row, j+col)
                         else:
-                           counter += 1
+                            list2.append(i+row, j+col)
                 except AssertionError:
                     pass
-        if self.is_human(row, col):
-            counter -= 1
-        return counter
+        
+        return list1, list2
     
     def count_q(self, yesterday):
-        q = 0.7 - 0.1(self.confirmed - yesterday)/yesterday/0.025
+        q = 0.7 - 0.1*(self.confirmed - yesterday)/yesterday/0.025
         return q
 
+    def is_normal_human(self, row, col):
+        if isinstance(self.grid[row, col], Human) and \
+        (isinstance(self.grid[row, col].current_state, Infected) or \
+            isinstance(self.grid[row, col].current_state, Asymptomatic) or\
+                isinstance(self.grid[row, col].current_state, Confirmed)):
+                return True
+        return False
 
     def is_human(self, row, col):
-        return True if self.grid[row, col]== self.HUMAN else False
-    
+        if isinstance(self.grid[row, col], Human):
+                return True
+        return False
+
     def time_flow(self):
         # for i in range(100):
           
@@ -65,27 +86,13 @@ class Society:
             # q = self.count_q(self.yesterday_confirmed)
         pass
 
+    # def __str__(self):
+    #     sstr=''
+    #     for i in range(self.num_rows()):
+    #         for j in range(self.num_cols()):
+    #             sstr+= "1" if (self.is_human(i,j)) else"0"
+    #         sstr+="\n" if i != self.num_rows() - 1 else ""
+    #     return sstr
 
-    def __str__(self):
-        sstr=''
-        for i in range(self.grid.num_rows()):
-            for j in range(self.grid.num_cols()):
-                sstr+= "1" if self.is_human(i,j) else"0"
-            sstr+="\n" if i != self.grid.num_rows() - 1 else ""
-        return sstr
-
-    
-        
-
-
-soc = Society(10, 10, 0.5)
-print(soc)
-
-# 1100001000
-# 1010001001
-# 1110101111
-# 0001010000
-# 1001111111
-# 1100010000
-# 0101100001
-# 1101111011
+soc = Society(10, 10, 0.7)
+print(soc.grid)
