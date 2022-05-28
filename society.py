@@ -43,8 +43,8 @@ class Society:
             for j in range(cols):
                 if random.random() < coef:
                     counter += 1
-                    h = Human(data, self, (rows, cols))
-                    if random.random() < 0.3:
+                    h = Human(data, self, (i, j))
+                    if random.random() < 0.1:
                         h.setState(Infected(h, data))
                     self.grid[i, j] = h
                 else:
@@ -57,22 +57,20 @@ class Society:
             for j in range(-1, 2):
                 if 0 <= i + coord[0] < self.grid.shape[0] and \
                         0 <= j + coord[1] < self.grid.shape[1]:
-                    print(type(self.grid[i + coord[0], j + coord[1]]))
                     if i == j == 0:
                         continue
-                    elif self.is_normal_human(i + coord[0], j + coord[1]):
+                    elif self.is_ill(i + coord[0], j + coord[1]):
                         if i == 0 or j == 0:
-                            list1.append((i + coord[0], j + coord[1]))
+                            list1.append(self.grid[i + coord[0], j + coord[1]])
                         else:
-                            list2.append((i + coord[0], j + coord[1]))
+                            list2.append(self.grid[i + coord[0], j + coord[1]])
         return list1, list2
 
     def count_q(self, yesterday):
         q = 0.7 - 0.1 * (self.confirmed - yesterday) / (yesterday or 0.001) / 0.025
         return q
 
-    def is_normal_human(self, row, col):
-        print(type(self.grid[row, col]))
+    def is_ill(self, row, col):
         if isinstance(self.grid[row, col], Human) and \
                 (isinstance(self.grid[row, col].current_state, Infected) or
                  isinstance(self.grid[row, col].current_state, Asymptomatic) or
@@ -87,7 +85,7 @@ class Society:
 
     def main(self):
         for day in range(100):
-            data["q"] = self.count_q(self.yesterday_confirmed)
+            data["q"] = 0
 
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
@@ -119,4 +117,4 @@ data["T3"] = 4
 data["u"] = 0.2
 data["k"] = 0.33
 
-soc = Society(10, 10, 0.7)
+soc = Society(20, 20, 0.7)
