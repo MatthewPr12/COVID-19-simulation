@@ -1,31 +1,54 @@
-from math import sqrt
-from random import uniform
+import random
+import sys
 
-from arrays import Array2D
+import matplotlib.pyplot as plt
+import numpy as np
+
+from visualization import display
+
+sys.path.insert(0, "States")
+
+from States.infected import Infected
+from States.confirmed import Confirmed
+from States.asymptomatic import Asymptomatic
 from human import Human
-
-data = dict()
 
 
 class Society:
     EMPTY = None
 
-    def __init__(self, num_rows, num_cols, coef_people):
-        self.grid = Array2D(num_rows, num_cols)
-        self.num_of_residents = self.add_people(coef_people)
-        self.num_of_infected = 0
-        self.num_of_recovered = 0
-        self.num_of_dead = 0
+    def __init__(self, num_rows, num_cols, coef_people, data):
+        self.data = data
+
+        self.infected = 0
+        self.recovered = 0
+        self.dead = 0
         self.confirmed = 0
         self.yesterday_confirmed = 0
 
-    def add_people(self, coef):
+        self.grid = np.array([[None] * num_cols for i in range(num_rows)])
+        self.residents = self.add_people(coef_people, num_rows, num_cols)
+
+        self.fig, self.ax = plt.subplots()
+
+        self.main()
+
+    def num_rows(self):
+        return len(self.grid)
+
+    def num_cols(self):
+        return len(self.grid[0])
+
+    def add_people(self, coef, rows, cols):
         counter = 0
-        for i in range(self.grid.num_rows()):
-            for j in range(self.grid.num_cols()):
-                if uniform(0, 1) < coef:
+        for i in range(rows):
+            for j in range(cols):
+                if random.random() < coef:
                     counter += 1
-                    self.grid[i, j] = Human(data)
+                    h = Human(self.data, self, (i, j))
+                    if random.random() < 0.01:
+                        h.setState(Infected(h, self.data))
+                    self.grid[i, j] = h
                 else:
                     self.grid[i, j] = Society.EMPTY
         return counter
@@ -45,43 +68,38 @@ class Society:
                             list2.append(self.grid[i + coord[0], j + coord[1]])
         return list1, list2
 
-    def count_q(self, before):
-        q = 0.7 - 0.1 * (self.confirmed - before) / before / 0.025
+    def count_q(self, yesterday):
+        q = 0.7 - 0.1 * (self.confirmed - yesterday) / (yesterday or 0.001) / 0.025
         return q
 
+    def is_ill(self, row, col):
+        if isinstance(self.grid[row, col], Human) and (
+                isinstance(self.grid[row, col].current_state, (Infected, Confirmed, Asymptomatic))):
+            print()
+            return True
+        return False
+
     def is_human(self, row, col):
-        return isinstance(self.grid[row, col], Human)
+        if isinstance(self.grid[row, col], Human):
+            return True
+        return False
 
-    def time_flow(self):
-        # for i in range(100):
+    def main(self):
+        for day in range(100):
+            self.data["q"] = 0
 
-        # 1-second cycle
+            for i in range(self.grid.shape[0]):
+                for j in range(self.grid.shape[1]):
+                    if self.grid[i, j]:
+                        self.grid[i, j].tick()
 
-        # counting new
-
-        # confirmed = count_confirmed()
-        # self.yesterday_confirmed = self.confirmed
-        # self.comfirmed = confimed()
-        # q = self.count_q(self.yesterday_confirmed)
-        pass
+            self.yesterday_confirmed = self.confirmed
+            display(self.grid, day, self.ax)
 
     def __str__(self):
         sstr = ''
-        for i in range(self.grid.num_rows()):
-            for j in range(self.grid.num_cols()):
-                sstr += "1" if self.is_human(i, j) else "0"
-            sstr += "\n" if i != self.grid.num_rows() - 1 else ""
+        for i in range(self.num_rows()):
+            for j in range(self.num_cols()):
+                sstr += "1" if (self.is_human(i, j)) else "0"
+            sstr += "\n" if i != self.num_rows() - 1 else ""
         return sstr
-
-
-soc = Society(10, 10, 0.5)
-print(soc)
-
-# 1100001000
-# 1010001001
-# 1110101111
-# 0001010000
-# 1001111111
-# 1100010000
-# 0101100001
-# 1101111011
