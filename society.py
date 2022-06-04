@@ -70,16 +70,11 @@ class Society:
         return q
 
     def is_ill(self, row, col):
-        if isinstance(self.grid[row, col], Human) and (
-                isinstance(self.grid[row, col].current_state, (Infected, Confirmed, Asymptomatic))):
-            print()
-            return True
-        return False
+        return isinstance(self.grid[row, col], Human) and\
+                str(self.grid[row, col].current_state.__class__.__name__) in  {'Infected', 'Confirmed', 'Asymptomatic'}
 
     def is_human(self, row, col):
-        if isinstance(self.grid[row, col], Human):
-            return True
-        return False
+        return isinstance(self.grid[row, col], Human)
 
     def main(self):
         for day in range(100):
