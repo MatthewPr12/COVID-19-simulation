@@ -30,21 +30,20 @@ class Society:
                     self.grid[i, j] = Society.EMPTY
         return counter
 
-    def get_neighbors(self, row, col):
-        counter = 0
+    def get_neighbors(self, coord):
+        list1, list2 = [], []
         for i in range(-1, 2):
             for j in range(-1, 2):
-                try:
-                    if self.is_human(i + row, j + col):
+                if 0 <= i + coord[0] < self.grid.shape[0] and \
+                        0 <= j + coord[1] < self.grid.shape[1]:
+                    if i == j == 0:
+                        continue
+                    elif self.is_ill(i + coord[0], j + coord[1]):
                         if i == 0 or j == 0:
-                            counter += sqrt(2)
+                            list1.append(self.grid[i + coord[0], j + coord[1]])
                         else:
-                            counter += 1
-                except AssertionError:
-                    pass
-        if self.is_human(row, col):
-            counter -= 1
-        return counter
+                            list2.append(self.grid[i + coord[0], j + coord[1]])
+        return list1, list2
 
     def count_q(self, before):
         q = 0.7 - 0.1 * (self.confirmed - before) / before / 0.025
