@@ -45,7 +45,7 @@ class Society:
                     counter += 1
                     h = Human(self.data, self, (i, j))
                     if (i == 10 and j == 10) or (i == 90 and j == 10) or (i == 90 and j == 90):
-                    # if random.random() < self.data['init_infected']:
+                        # if random.random() < self.data['init_infected']:
                         h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
@@ -84,11 +84,10 @@ class Society:
         self.yesterday_confirmed = 3
         for day in range(100):
             self.data["q"] = self.count_q(self.yesterday_confirmed)
-
+            self.yesterday_confirmed = self.confirmed
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
                     if self.grid[i, j]:
                         self.grid[i, j].tick()
 
-            self.yesterday_confirmed = self.confirmed
             display(self.grid, day, self.ax)
