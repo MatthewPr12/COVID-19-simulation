@@ -6,6 +6,10 @@ from state import State
 
 
 class Confirmed(State):
+    def __init__(self, human, data):
+        super().__init__(human, data)
+        self.human.society.confirmed += 1
+
     def tick(self):
         super().tick()
         if self.time == self.data['T2']:
@@ -13,3 +17,4 @@ class Confirmed(State):
                 self.human.setState(Hospitalized(self.human, self.data))
             else:
                 self.human.setState(Recovered(self.human, self.data))
+            self.human.society.confirmed -= 1
