@@ -5,11 +5,7 @@ from human import Human
 
 
 def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de):
-    GREY = (0.78, 0.78, 0.78)  # uninfected
-    RED = (0.96, 0.15, 0.15)  # infected
-    GREEN = (0, 0.86, 0.03)  # recovered
-    BLACK = (0, 0, 0)  # dead
-    WHITE = (1., 1., 1.)  # empty position
+    WHITE = (1, 1, 1)  # empty position
     colors = np.asarray(
         [[get_human_color(human) if isinstance(human, Human) else WHITE for human in arr] for arr in
          array])
@@ -25,17 +21,21 @@ def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de
                loc='upper left')
     ax2.set_xlabel('Day ' + str(day_number))
     ax2.set_ylabel('Number of people')
-    plt.pause(0.01)
+    plt.pause(1)
 
 
 def get_human_color(human):
-    GREY = (0.78, 0.78, 0.78)  # uninfected
-    RED = (0.96, 0.15, 0.15)  # infected
-    GREEN = (0, 0.86, 0.03)  # recovered
+    GREY = (220,220,220)  # susceptible
+    RED = (255,0,0)  # infected
+    GREEN = (124,252,0)  # recovered
     BLACK = (0, 0, 0)  # dead
-    WHITE = (1., 1., 1.)  # empty position
-    states = {'Susceptible': GREY, 'SelfIsolated': (0.2, 0.78, 0.78),
-              'Infected': RED, 'Confirmed': (0.96, 0.45, 0.45),
-              'Recovered': GREEN, 'Hospitalized': (0.96, 0.8, 0.15), 'Dead': BLACK,
-              'Asymptomatic': (0.96, 0.15, 0.15)}
+    WHITE = (1, 1, 1)  # empty position
+    BLUE = (0,0,255) #self isolated
+    YELLOW = (255,255,0) #asymptomatic
+    ORANGE = (255, 140, 0) #hospitalized
+    PURPLE = (230, 230, 250) #confirmed
+    states = {'Susceptible': GREY, 'SelfIsolated': BLUE,
+              'Infected': RED, 'Confirmed': PURPLE,
+              'Recovered': GREEN, 'Hospitalized': ORANGE, 'Dead': BLACK,
+              'Asymptomatic': YELLOW}
     return states[str(human.getState().__class__.__name__)]
