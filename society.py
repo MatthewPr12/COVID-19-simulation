@@ -56,18 +56,17 @@ class Society:
         return counter
 
     def get_neighbors(self, coord):
-        straight, diagonal = [], []
-        y, x = coord
-        for dy, dx in {(-1, 0), (1, 0), (0, 1), (0, -1)}:
-            if 0 <= y + dy < self.grid.shape[0] and 0 <= x + dx < self.grid.shape[1]:
-                if self.is_ill(y + dy, x + dx):
-                    straight.append(self.grid[y + dy, x + dx])
 
-        for dy, d in {(-1, -1), (-1, 1), (1, -1), (1, 1)}:
-            if 0 <= y + dy < self.grid.shape[0] and 0 <= x + dx < self.grid.shape[1]:
-                if self.is_ill(y + dy, x + dx):
-                    diagonal.append(self.grid[y + dy, x + dx])
-        return straight, diagonal
+        list1, list2 = [], []
+        for (i,j) in {(-1,-1), (-1, 0), (0,-1), (1,0), (0,1), (1,1), (-1, 1), (1, -1)}:
+            if 0 <= i + coord[0] < self.grid.shape[0] and \
+                    0 <= j + coord[1] < self.grid.shape[1]:
+                if self.is_ill(i + coord[0], j + coord[1]):
+                    if i == 0 or j == 0:
+                        list1.append(self.grid[i + coord[0], j + coord[1]])
+                    else:
+                        list2.append(self.grid[i + coord[0], j + coord[1]])
+        return list1, list2
 
     def count_q(self, yesterday):
         q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
@@ -75,17 +74,12 @@ class Society:
         return q
 
     def is_ill(self, row, col):
-        if isinstance(self.grid[row, col], Human):
-            if self.grid[row, col].current_state.__class__.__name__ in {'Infected', 'Confirmed', 'Asymptomatic'}:
+        return isinstance(self.grid[row, col], Human) and\
+                str(self.grid[row, col].current_state.__class__.__name__) in  {'Infected', 'Confirmed', 'Asymptomatic'}
 
-                return True
-            return False
-        return False
 
     def is_human(self, row, col):
-        if isinstance(self.grid[row, col], Human):
-            return True
-        return False
+        return isinstance(self.grid[row, col], Human)
 
     def main(self):
         self.yesterday_confirmed = 3

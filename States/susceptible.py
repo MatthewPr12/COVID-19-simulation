@@ -26,10 +26,9 @@ class Susceptible(State):
 
     def calculate_p(self):
         straight, diag = self.human.society.get_neighbors(self.human.coords)
-
         p = 0
         for nb in straight:
-            p += (1/8) * nb.immunity_coefficient()
+            p += (1 / 8) * nb.immunity_coefficient()
 
         for nb in diag:
             p += (1 / (8 * sqrt(2))) * nb.immunity_coefficient()
