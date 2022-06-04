@@ -16,7 +16,7 @@ def display(array, day_number, ax):
     ax.cla()
     ax.set_title("{}".format('Day ' + str(day_number)))  # add additional info
     ax.imshow(colors)
-    plt.pause(0.6)
+    plt.pause(0.1)
 
 
 def get_human_color(human):
