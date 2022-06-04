@@ -10,10 +10,11 @@ data["T1"] = 10
 data["T2"] = 4
 data["T3"] = 4
 data["T4"] = 7
+data["T5"] = 120
 
 data["u"] = 0.2
 data["k"] = 0.33
 data['init_infected'] = 0.001
 
 
-soc = Society(100, 100, 1, data)
+soc = Society(200, 200, 1, data)

@@ -50,13 +50,11 @@ class Society:
                 if random.random() < coef:
                     counter += 1
                     h = Human(self.data, self, (i, j))
-                    if (i == 10 and j == 10) or (i == 90 and j == 10) or (i == 90 and j == 90):
-                        # if random.random() < self.data['init_infected']:
+                    if random.random() < self.data["init_infected"]:
                         h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
                     self.grid[i, j] = Society.EMPTY
-        self.confirmed = 3
         return counter
 
     def get_neighbors(self, coord):
