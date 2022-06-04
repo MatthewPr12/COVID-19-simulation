@@ -67,8 +67,8 @@ class Society:
         return list1, list2
 
     def count_q(self, yesterday):
-        q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
-        print(self.confirmed)
+        q = -0.1 - 0.1 * (yesterday - self.confirmed) / (self.residents or 0.001) / 0.035
+        print(q)
         return q
 
     def is_ill(self, row, col):
