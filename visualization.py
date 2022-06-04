@@ -21,7 +21,7 @@ def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de
                loc='upper left')
     ax2.set_xlabel('Day ' + str(day_number))
     ax2.set_ylabel('Number of people')
-    plt.pause(0.01)
+    plt.pause(1)
 
 
 def get_human_color(human):
@@ -30,8 +30,8 @@ def get_human_color(human):
     GREEN = (124,252,0)  # recovered
     BLACK = (0, 0, 0)  # dead
     WHITE = (1, 1, 1)  # empty position
-    BLUE = (240, 248, 255) #self isolated
-    YELLOW = (234, 221, 202) #asymptomatic
+    BLUE = (0,0,255) #self isolated
+    YELLOW = (255,255,0) #asymptomatic
     ORANGE = (255, 140, 0) #hospitalized
     PURPLE = (230, 230, 250) #confirmed
     states = {'Susceptible': GREY, 'SelfIsolated': BLUE,
