@@ -25,7 +25,7 @@ def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de
                loc='upper left')
     ax2.set_xlabel('Day ' + str(day_number))
     ax2.set_ylabel('Number of people')
-    plt.pause(0.1)
+    plt.pause(0.01)
 
 
 def get_human_color(human):
