@@ -25,7 +25,7 @@ def get_human_color(human):
     GREEN = (0, 0.86, 0.03)  # recovered
     BLACK = (0, 0, 0)  # dead
     WHITE = (1., 1., 1.)  # empty position
-    states = {'Susceptible': GREY, 'SelfIsolated': (0.2, 0.78, 0.78),
+    states = {'Susceptible': GREY, 'SelfIsolated': BLACK,
               'Infected': RED, 'Confirmed': (0.96, 0.45, 0.45),
               'Recovered': GREEN, 'Hospitalized': (0.96, 0.8, 0.15), 'Dead': (0, 0, 0),
               'Asymptomatic': (0.96, 0.15, 0.15)}

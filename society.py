@@ -9,15 +9,17 @@ from visualization import display
 sys.path.insert(0, "States")
 
 from States.infected import Infected
-from States.asymptomatic import Asymptomatic
 from States.confirmed import Confirmed
+from States.asymptomatic import Asymptomatic
 from human import Human
 
 
 class Society:
     EMPTY = None
 
-    def __init__(self, num_rows, num_cols, coef_people):
+    def __init__(self, num_rows, num_cols, coef_people, data):
+        self.data = data
+
         self.infected = 0
         self.recovered = 0
         self.dead = 0
@@ -43,9 +45,9 @@ class Society:
             for j in range(cols):
                 if random.random() < coef:
                     counter += 1
-                    h = Human(data, self, (i, j))
-                    if random.random() < 0.1:
-                        h.setState(Infected(h, data))
+                    h = Human(self.data, self, (i, j))
+                    if random.random() < 0.01:
+                        h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
                     self.grid[i, j] = Society.EMPTY
@@ -71,10 +73,9 @@ class Society:
         return q
 
     def is_ill(self, row, col):
-        if isinstance(self.grid[row, col], Human) and \
-                (isinstance(self.grid[row, col].current_state, Infected) or
-                 isinstance(self.grid[row, col].current_state, Asymptomatic) or
-                 isinstance(self.grid[row, col].current_state, Confirmed)):
+        if isinstance(self.grid[row, col], Human) and (
+                isinstance(self.grid[row, col].current_state, (Infected, Confirmed, Asymptomatic))):
+            print()
             return True
         return False
 
@@ -85,7 +86,7 @@ class Society:
 
     def main(self):
         for day in range(100):
-            data["q"] = 0
+            self.data["q"] = 0
 
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
@@ -102,19 +103,3 @@ class Society:
                 sstr += "1" if (self.is_human(i, j)) else "0"
             sstr += "\n" if i != self.num_rows() - 1 else ""
         return sstr
-
-
-data = dict()
-data["young"] = 1
-data["old"] = 0.75
-data["female"] = 1
-data["male"] = 0.8
-
-data["T1"] = 10
-data["T2"] = 4
-data["T3"] = 4
-
-data["u"] = 0.2
-data["k"] = 0.33
-
-soc = Society(20, 20, 0.7)
