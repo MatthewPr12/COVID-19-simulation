@@ -54,19 +54,18 @@ class Society:
         return counter
 
     def get_neighbors(self, coord):
-        list1, list2 = [], []
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if 0 <= i + coord[0] < self.grid.shape[0] and \
-                        0 <= j + coord[1] < self.grid.shape[1]:
-                    if i == j == 0:
-                        continue
-                    elif self.is_ill(i + coord[0], j + coord[1]):
-                        if i == 0 or j == 0:
-                            list1.append(self.grid[i + coord[0], j + coord[1]])
-                        else:
-                            list2.append(self.grid[i + coord[0], j + coord[1]])
-        return list1, list2
+        straight, diagonal = [], []
+        y, x = coord
+        for dy, dx in {(-1, 0), (1, 0), (0, 1), (0, -1)}:
+            if 0 <= y + dy < self.grid.shape[0] and 0 <= x + dx < self.grid.shape[1]:
+                if self.is_ill(y + dy, x + dx):
+                    straight.append(self.grid[y + dy, x + dx])
+
+        for dy, d in {(-1, -1), (-1, 1), (1, -1), (1, 1)}:
+            if 0 <= y + dy < self.grid.shape[0] and 0 <= x + dx < self.grid.shape[1]:
+                if self.is_ill(y + dy, x + dx):
+                    diagonal.append(self.grid[y + dy, x + dx])
+        return straight, diagonal
 
     def count_q(self, yesterday):
         q = 0.7 - 0.1 * (self.confirmed - yesterday) / (yesterday or 0.001) / 0.025
