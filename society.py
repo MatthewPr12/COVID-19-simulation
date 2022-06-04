@@ -67,8 +67,8 @@ class Society:
         return list1, list2
 
     def count_q(self, yesterday):
-        q = -0.3 - (yesterday - self.confirmed) / (self.residents or 0.001) * 600
-        print(self.confirmed)
+        q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
+        print(self.confirmedg)
         return q
 
     def is_ill(self, row, col):
@@ -82,14 +82,13 @@ class Society:
 
     def main(self):
         self.yesterday_confirmed = 3
-        for day in range(10000):
+        for day in range(100):
             self.data["q"] = self.count_q(self.yesterday_confirmed)
-            print(self.data["q"])
 
-            self.yesterday_confirmed = self.confirmed
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
                     if self.grid[i, j]:
                         self.grid[i, j].tick()
 
+            self.yesterday_confirmed = self.confirmed
             display(self.grid, day, self.ax)
