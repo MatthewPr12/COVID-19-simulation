@@ -16,4 +16,4 @@ data["k"] = 0.33
 data['init_infected'] = 0.001
 
 
-soc = Society(100, 100, 1, data)
+soc = Society(1000, 1000, 1, data)

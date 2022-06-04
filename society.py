@@ -18,6 +18,10 @@ class Society:
     def __init__(self, num_rows, num_cols, coef_people, data):
         self.data = data
 
+        self.infected_array = []
+        self.recovered_array = []
+        self.dead_array = []
+
         self.infected = 0
         self.recovered = 0
         self.dead = 0
@@ -27,7 +31,9 @@ class Society:
         self.grid = np.array([[None] * num_cols for i in range(num_rows)])
         self.residents = self.add_people(coef_people, num_rows, num_cols)
 
-        self.fig, self.ax = plt.subplots()
+        fig = plt.figure(figsize=(14, 7))
+        self.ax1 = fig.add_subplot(121)
+        self.ax2 = fig.add_subplot(122)
 
         self.main()
 
@@ -67,9 +73,9 @@ class Society:
         return list1, list2
 
     def count_q(self, yesterday):
-        q = -0.1 - 0.1 * (yesterday - self.confirmed) / (self.residents or 0.001) / 0.035
-        print(q)
-        return q
+
+        return -0.3 - (yesterday - self.confirmed) / (self.residents or 0.001) * 600
+
 
     def is_ill(self, row, col):
         return isinstance(self.grid[row, col], Human) and \
@@ -82,12 +88,18 @@ class Society:
 
     def main(self):
         self.yesterday_confirmed = 3
-        for day in range(100):
+        for day in range(1000000):
             self.data["q"] = self.count_q(self.yesterday_confirmed)
             self.yesterday_confirmed = self.confirmed
+
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
                     if self.grid[i, j]:
                         self.grid[i, j].tick()
 
-            display(self.grid, day, self.ax)
+            self.infected_array.append(self.infected)
+            self.recovered_array.append(self.recovered)
+            self.dead_array.append(self.dead)
+
+            display(self.grid, day, self.ax1, self.ax2, self.infected_array, self.recovered_array,
+                    self.dead_array, self.infected, self.recovered, self.dead)
