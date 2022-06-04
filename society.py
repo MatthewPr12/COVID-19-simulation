@@ -46,7 +46,7 @@ class Society:
                 if random.random() < coef:
                     counter += 1
                     h = Human(self.data, self, (i, j))
-                    if random.random() < 0.01:
+                    if random.random() < self.data['init_infected']:
                         h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
@@ -54,6 +54,7 @@ class Society:
         return counter
 
     def get_neighbors(self, coord):
+
         list1, list2 = [], []
         for (i,j) in {(-1,-1), (-1, 0), (0,-1), (1,0), (0,1), (1,1), (-1, 1), (1, -1)}:
             if 0 <= i + coord[0] < self.grid.shape[0] and \
@@ -72,6 +73,7 @@ class Society:
     def is_ill(self, row, col):
         return isinstance(self.grid[row, col], Human) and\
                 str(self.grid[row, col].current_state.__class__.__name__) in  {'Infected', 'Confirmed', 'Asymptomatic'}
+
 
     def is_human(self, row, col):
         return isinstance(self.grid[row, col], Human)

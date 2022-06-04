@@ -12,7 +12,7 @@ class Susceptible(State):
         super().__init__(human, data)
 
         self.p_a = 0.95 if human.age <= 4 else 0.8 if 5 <= human.age <= 14 else 0.7 if 15 <= human.age <= 29 else 0.5 if 30 <= human.age <= 59 else 0.4 if 60 <= human.age <= 69 else 0.3 if 70 <= human.age <= 79 else 0.2
-        self.p_a = 1
+        # self.p_a = 1
 
     def tick(self):
         super().tick()
@@ -35,8 +35,8 @@ class Susceptible(State):
             print(diag)
         p = 0
         for nb in straight:
-            p += nb.immunity_coefficient()
+            p += (1/8) * nb.immunity_coefficient()
 
         for nb in diag:
-            p += (1 / (2 * sqrt(2))) * nb.immunity_coefficient()
+            p += (1 / (8 * sqrt(2))) * nb.immunity_coefficient()
         return p
