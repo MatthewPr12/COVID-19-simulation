@@ -12,6 +12,7 @@ from States.infected import Infected
 from States.asymptomatic import Asymptomatic
 from States.confirmed import Confirmed
 from human import Human
+from States.recovered import Recovered
 
 
 class Society:
@@ -44,7 +45,8 @@ class Society:
                 if random.random() < coef:
                     counter += 1
                     h = Human(data, self, (i, j))
-                    if random.random() < 0.1:
+                    # if random.random() < 0.1:
+                    if (i == 10 and j == 10) or (i == 90 and j == 90) or (i == 10 and j == 90):
                         h.setState(Infected(h, data))
                     self.grid[i, j] = h
                 else:
@@ -84,7 +86,7 @@ class Society:
         return False
 
     def main(self):
-        for day in range(100):
+        for day in range(365):
             data["q"] = 0
 
             for i in range(self.grid.shape[0]):
@@ -117,4 +119,4 @@ data["T3"] = 4
 data["u"] = 0.2
 data["k"] = 0.33
 
-soc = Society(20, 20, 0.7)
+soc = Society(100, 100, 0.9)

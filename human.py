@@ -5,6 +5,7 @@ sys.path.append("States")
 
 import math
 import random
+import numpy as np
 from random import choice
 
 from States.susceptible import Susceptible
@@ -35,9 +36,11 @@ class Human:
         self.current_state.tick()
 
     def get_normal_distribution_value(self):
-        return random.choice(distribution)
+        # return random.choice(distribution)
+        return np.random.uniform()
 
     def immunity_coefficient(self):
+        return 1
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())

@@ -16,7 +16,7 @@ def display(array, day_number, ax):
     ax.cla()
     ax.set_title("{}".format('Day ' + str(day_number)))  # add additional info
     ax.imshow(colors)
-    plt.pause(0.6)
+    plt.pause(0.5)
 
 
 def get_human_color(human):
@@ -28,5 +28,5 @@ def get_human_color(human):
     states = {'Susceptible': GREY, 'SelfIsolated': (0.2, 0.78, 0.78),
               'Infected': RED, 'Confirmed': (0.96, 0.45, 0.45),
               'Recovered': GREEN, 'Hospitalized': (0.96, 0.8, 0.15), 'Dead': (0, 0, 0),
-              'Asymptomatic': (0.96, 0.15, 0.15)}
+              'Asymptomatic': (0.86, 0.10, 0.10)}
     return states[str(human.getState().__class__.__name__)]
