@@ -46,11 +46,13 @@ class Society:
                 if random.random() < coef:
                     counter += 1
                     h = Human(self.data, self, (i, j))
-                    if random.random() < self.data['init_infected']:
+                    if (i == 10 and j == 10) or (i == 90 and j == 10) or (i == 90 and j == 90):
+                    # if random.random() < self.data['init_infected']:
                         h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
                     self.grid[i, j] = Society.EMPTY
+        self.confirmed = 3
         return counter
 
     def get_neighbors(self, coord):
@@ -68,7 +70,8 @@ class Society:
         return straight, diagonal
 
     def count_q(self, yesterday):
-        q = 0.7 - 0.1 * (self.confirmed - yesterday) / (yesterday or 0.001) / 0.025
+        q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
+        print(self.confirmedg)
         return q
 
     def is_ill(self, row, col):
@@ -85,8 +88,9 @@ class Society:
         return False
 
     def main(self):
+        self.yesterday_confirmed = 3
         for day in range(100):
-            self.data["q"] = 0
+            self.data["q"] = self.count_q(self.yesterday_confirmed)
 
             for i in range(self.grid.shape[0]):
                 for j in range(self.grid.shape[1]):
