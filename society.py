@@ -68,7 +68,7 @@ class Society:
 
     def count_q(self, yesterday):
         q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
-        print(self.confirmedg)
+        print(self.confirmed)
         return q
 
     def is_ill(self, row, col):
@@ -92,11 +92,3 @@ class Society:
 
             self.yesterday_confirmed = self.confirmed
             display(self.grid, day, self.ax)
-
-    def __str__(self):
-        sstr = ''
-        for i in range(self.num_rows()):
-            for j in range(self.num_cols()):
-                sstr += "1" if (self.is_human(i, j)) else "0"
-            sstr += "\n" if i != self.num_rows() - 1 else ""
-        return sstr
