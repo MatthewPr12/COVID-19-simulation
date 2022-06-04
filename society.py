@@ -46,7 +46,7 @@ class Society:
                 if random.random() < coef:
                     counter += 1
                     h = Human(self.data, self, (i, j))
-                    if random.random() < 0.01:
+                    if random.random() < self.data['init_infected']:
                         h.setState(Infected(h, self.data))
                     self.grid[i, j] = h
                 else:
@@ -72,10 +72,11 @@ class Society:
         return q
 
     def is_ill(self, row, col):
-        if isinstance(self.grid[row, col], Human) and (
-                isinstance(self.grid[row, col].current_state, (Infected, Confirmed, Asymptomatic))):
-            print()
-            return True
+        if isinstance(self.grid[row, col], Human):
+            if self.grid[row, col].current_state.__class__.__name__ in {'Infected', 'Confirmed', 'Asymptomatic'}:
+
+                return True
+            return False
         return False
 
     def is_human(self, row, col):

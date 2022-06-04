@@ -38,7 +38,6 @@ class Human:
         return random.choice(distribution)
 
     def immunity_coefficient(self):
-        return 100
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())
