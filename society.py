@@ -9,8 +9,6 @@ from visualization import display
 sys.path.insert(0, "States")
 
 from States.infected import Infected
-from States.confirmed import Confirmed
-from States.asymptomatic import Asymptomatic
 from human import Human
 
 
@@ -56,7 +54,7 @@ class Society:
     def get_neighbors(self, coord):
 
         list1, list2 = [], []
-        for (i,j) in {(-1,-1), (-1, 0), (0,-1), (1,0), (0,1), (1,1), (-1, 1), (1, -1)}:
+        for (i, j) in {(-1, -1), (-1, 0), (0, -1), (1, 0), (0, 1), (1, 1), (-1, 1), (1, -1)}:
             if 0 <= i + coord[0] < self.grid.shape[0] and \
                     0 <= j + coord[1] < self.grid.shape[1]:
                 if self.is_ill(i + coord[0], j + coord[1]):
@@ -71,9 +69,10 @@ class Society:
         return q
 
     def is_ill(self, row, col):
-        return isinstance(self.grid[row, col], Human) and\
-                str(self.grid[row, col].current_state.__class__.__name__) in  {'Infected', 'Confirmed', 'Asymptomatic'}
-
+        return isinstance(self.grid[row, col], Human) and \
+               str(self.grid[row, col].current_state.__class__.__name__) in {'Infected',
+                                                                             'Confirmed',
+                                                                             'Asymptomatic'}
 
     def is_human(self, row, col):
         return isinstance(self.grid[row, col], Human)
