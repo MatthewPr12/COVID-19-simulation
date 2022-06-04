@@ -70,7 +70,7 @@ class Society:
 
     def count_q(self, yesterday):
         q = -0.1 - 0.1 * (yesterday - self.confirmed) / (yesterday or 0.001) / 0.025
-        print(self.confirmedg)
+        print(self.confirmed)
         return q
 
     def is_ill(self, row, col):
