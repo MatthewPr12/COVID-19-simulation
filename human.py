@@ -6,6 +6,7 @@ sys.path.append("States")
 import math
 import random
 from random import choice
+import numpy as np
 
 from States.susceptible import Susceptible
 from normal_distrubution import get_normal_distribution
@@ -41,6 +42,11 @@ class Human:
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())
+        # a = np.random.uniform()
+        # print(a)
+        # return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
+        #                  (self.data['male'] if self.gender == 'male' else self.data[
+        #                      'female']) * a)
     #
     # def __repr__(self):
     #     return self.current_state.__class__.__name__[0]
