@@ -86,8 +86,11 @@ class Society:
 
     def main(self):
         self.yesterday_confirmed = 3
-        for day in range(1000000):
-            self.data["q"] = self.count_q(self.yesterday_confirmed)
+        for day in range(365):
+            if day < 20:
+                self.data['q'] = 0
+            else:
+                self.data["q"] = self.count_q(self.yesterday_confirmed)
             self.yesterday_confirmed = self.confirmed
 
             for i in range(self.grid.shape[0]):
