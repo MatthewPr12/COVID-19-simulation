@@ -1,21 +1,30 @@
-"""Human Class"""
+"""
+module which deals with Human class
+"""
 import sys
-
-sys.path.append("States")
 
 import math
 import random
 from random import choice
-import numpy as np
+# import numpy as np
 
 from States.susceptible import Susceptible
 from normal_distrubution import get_normal_distribution
-
+sys.path.append("States")
 distribution = get_normal_distribution()
 
 
 class Human:
+    """
+    Human class
+    """
     def __init__(self, data, society, coords):
+        """
+        constructor
+        @param data:
+        @param society:
+        @param coords:
+        """
         self.data = data
         self.society = society
         self.coords = coords
@@ -26,19 +35,40 @@ class Human:
         self.setState(Susceptible(self, data))
 
     def setState(self, state):
+        """
+        State setter
+        @param state:
+        @return:
+        """
         self.current_state = state
         self.current_state.human = self
 
     def getState(self):
+        """
+        State getter
+        @return:
+        """
         return self.current_state
 
     def tick(self):
+        """
+        move to next period of time
+        @return:
+        """
         self.current_state.tick()
 
     def get_normal_distribution_value(self):
+        """
+        normal distribution
+        @return:
+        """
         return random.choice(distribution)
 
     def immunity_coefficient(self):
+        """
+        count A(i, j) for each individual based on his/her age, gender
+        @return:
+        """
         return math.sqrt(1 - (self.data['young'] if self.age < 60 else self.data['old']) *
                          (self.data['male'] if self.gender == 'male' else self.data[
                              'female']) * self.get_normal_distribution_value())

@@ -1,3 +1,6 @@
+"""
+module to visualize virus spreading
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -5,12 +8,26 @@ from human import Human
 
 
 def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de):
+    """
+    func to show graphs and the spreading
+    @param array:
+    @param day_number:
+    @param ax1:
+    @param ax2:
+    @param infected:
+    @param recovered:
+    @param dead:
+    @param inf:
+    @param rec:
+    @param de:
+    @return:
+    """
     WHITE = (1, 1, 1)  # empty position
     colors = np.asarray(
         [[get_human_color(human) if isinstance(human, Human) else WHITE for human in arr] for arr in
          array])
     ax1.cla()
-    ax1.set_title("{}".format('Day ' + str(day_number)))
+    ax1.set_title(f"{'Day ' + str(day_number)}")
     ax1.imshow(colors)
     t = np.arange(0, len(infected), 1)
     ax2.plot()
@@ -25,6 +42,11 @@ def display(array, day_number, ax1, ax2, infected, recovered, dead, inf, rec, de
 
 
 def get_human_color(human):
+    """
+    distribute colors by individual's state
+    @param human:
+    @return:
+    """
     GREY = (220, 220, 220)  # susceptible
     RED = (255, 0, 0)  # infected
     GREEN = (124, 252, 0)  # recovered
