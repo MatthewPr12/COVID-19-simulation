@@ -25,3 +25,5 @@ R - isolated
 H - hospitalized individual
 
 
+<pre><code> python3 main.py </code>></pre>
+
